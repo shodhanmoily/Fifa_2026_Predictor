@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Groups — FIFA 2026</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+
+<body>
+
+  <nav>
+    <!-- <a href="/" class="nav-brand">⚽ FIFA <span>2026</span></a> -->
+    <a href="/" class="nav-brand">
+      <img src="/static/fifa_logo.webp" style="height:40px;width:auto;object-fit:contain;" alt="FIFA World Cup 2026" />
+      <span style="color:white;font-size:24px;font-weight:700;letter-spacing:1px;line-height:40px;">FIFA WORLD CUP
+        2026</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">🏠 Home</a></li>
+      <li><a href="/groups" class="active">🏟 Groups</a></li>
+      <li><a href="/simulator">🏆 Simulator</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <div class="hero fade-up" style="padding:2rem 0 2.5rem;">
+      <div class="hero-badge">🏟 FIFA World Cup 2026</div>
+      <h1 style="font-size:50px;">ALL 12 GROUPS</h1>
+      <p style="color:#F5B800">48 TEAMS ACROSS 12 GROUPS—TOP 2 FROM EACH GROUP ADVANCE TO ROUND OF 32</p>
+    </div>
+
+    <div class="groups-grid fade-up fade-up-1">
+      {% for group_name, group_teams in groups.items() %}
+      <div class="group-card">
+
+        <div class="group-header">
+          <div class="group-letter">{{ group_name }}</div>
+          <div style="font-size:12px;color:var(--text3);">
+            {{ group_teams|length }} teams
+          </div>
+        </div>
+
+        <div class="group-teams">
+          {% for team in group_teams %}
+          <div class="group-team-row">
+            <img src="https://flagcdn.com/48x36/{{ flag_codes[team] }}.png" width="32" height="24"
+              style="border-radius:3px;object-fit:cover;flex-shrink:0;" alt="{{ team }}" />
+            <div class="team-info">
+              <div class="name">{{ team }}</div>
+              <div class="conf">{{ confederation[team] }}</div>
+            </div>
+            <div class="team-rank-badge">#{{ rankings[team] }}</div>
+          </div>
+          {% endfor %}
+        </div>
+
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Info section -->
+    <div class="card fade-up fade-up-2" style="margin-top:2.5rem;">
+      <div class="card-title">Group Stage Format</div>
+      <div class="grid-3">
+        <!-- <div class="stat-box">
+          <span class="stat-value">12</span>
+          <span class="stat-label">Groups</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-value">4</span>
+          <span class="stat-label">Teams per group</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-value">2</span>
+          <span class="stat-label">Qualify per group</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-value">6</span>
+          <span class="stat-label">Matches per group</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-value">72</span>
+          <span class="stat-label">Group stage matches</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-value">24</span>
+          <span class="stat-label">Teams advance</span>
+        </div>
+      </div> -->
+        <div class="stat-box">
+          <span class="stat-value">12</span>
+          <span class="stat-label">Groups</span>
+        </div>
+
+        <div class="stat-box">
+          <span class="stat-value">4</span>
+          <span class="stat-label">Teams per Group</span>
+        </div>
+
+        <div class="stat-box">
+          <span class="stat-value">6</span>
+          <span class="stat-label">Matches per Group</span>
+        </div>
+
+        <div class="stat-box">
+          <span class="stat-value">72</span>
+          <span class="stat-label">Group Stage Matches</span>
+        </div>
+
+        <div class="stat-box">
+          <span class="stat-value">24</span>
+          <span class="stat-label">Top 2 From Each Group Qualify</span>
+        </div>
+
+        <div class="stat-box">
+          <span class="stat-value">8</span>
+          <span class="stat-label">Best 3rd Place</span>
+        </div>
+
+      </div>
+
+      <!-- Points system -->
+      <div class="card fade-up fade-up-3" style="margin-top:1.5rem;">
+        <div class="card-title"> Points System</div>
+        <div class="grid-3">
+          <div class="stat-box">
+            <span class="stat-value text-gold">3</span>
+            <span class="stat-label">Points for Win</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-value text-gold">1</span>
+            <span class="stat-label">Points for Draw</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-value text-red">0</span>
+            <span class="stat-label">Points for Loss</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- FIFA World Cup 2026 Tournament Structure -->
+      <div class="card fade-up fade-up-3" style="margin-top:1.5rem;">
+        <div class="card-title">🏆 FIFA World Cup 2026 Format</div>
+
+        <div class="grid-3">
+
+          <div class="stat-box">
+            <span class="stat-value text-gold">48</span>
+            <span class="stat-label">Teams Qualified</span>
+          </div>
+
+          <div class="stat-box">
+            <span class="stat-value text-blue">12</span>
+            <span class="stat-label">Groups of 4 Teams</span>
+          </div>
+
+          <div class="stat-box">
+            <span class="stat-value text-gold">32</span>
+            <span class="stat-label">Advance to Knockouts</span>
+          </div>
+
+          <div class="stat-box">
+            <span class="stat-value text-gold">32</span>
+            <span class="stat-label">Round of 32</span>
+          </div>
+
+          <div class="stat-box">
+            <span class="stat-value text-gold">16</span>
+            <span class="stat-label">Round of 16</span>
+          </div>
+
+          <div class="stat-box">
+            <span class="stat-value text-gold">8</span>
+            <span class="stat-label">Quarter Finals</span>
+          </div>
+
+          <div class="stat-box">
+            <span class="stat-value text-purple">4</span>
+            <span class="stat-label">Semi Finals</span>
+          </div>
+
+          <div class="stat-box">
+            <span class="stat-value text-gold">2</span>
+            <span class="stat-label">Finalists</span>
+          </div>
+
+          <div class="stat-box">
+            <span class="stat-value text-gold">🏆</span>
+            <span class="stat-label">World Champion</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:2rem;" class="fade-up">
+        <a href="/simulator" class="btn btn-primary" style="width:auto;padding:14px 40px;">
+          🏆 Simulate Full Tournament →
+        </a>
+      </div>
+
+  </main>
+
+  <footer>
+    <!-- Built with Poisson Regression + Elo Ratings &nbsp;·&nbsp; -->
+    FIFA World Cup 2026 Predictor &nbsp; &nbsp;
+    <!-- Data Science Project -->
+  </footer>
+
+</body>
+
+<style>
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(245, 184, 0, 0.15);
+    border: 1px solid rgba(245, 184, 0, 0.4);
+    color: #F5B800;
+    padding: 6px 55px;
+    border-radius: 100px;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 2rem;
+  }
+</style>
+
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ r.home_team }} vs {{ r.away_team }} — FIFA 2026</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+
+<body>
+
+  <!-- <nav>
+    <a href="/" class="nav-brand">
+      <img src="https://flagcdn.com/32x24/us.png" style="border-radius:3px;" alt="" />
+      <img src="https://flagcdn.com/32x24/mx.png" style="border-radius:3px;" alt="" />
+      <img src="https://flagcdn.com/32x24/ca.png" style="border-radius:3px;" alt="" />
+      <span>FIFA WORLD CUP</span>
+      <span style="color:var(--gold);margin-left:4px;">2026</span>
+
+    </a>
+    <ul class="nav-links">
+      <li><a href="/" class="active">Home</a></li>
+      <li><a href="/groups">Groups</a></li>
+      <li><a href="/simulator">Simulator</a></li>
+    </ul>
+    <button class="nav-menu-btn" onclick="toggleMobileMenu()">☰</button>
+  </nav> -->
+
+
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="/" class="nav-brand">
+      <img src="/static/fifa_logo.webp" style="height:40px;width:auto;object-fit:contain;" alt="FIFA World Cup 2026" />
+      <span style="color:white;font-size:24px;font-weight:700;letter-spacing:1px;line-height:40px;">FIFA WORLD CUP
+        2026</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/" class="active">🏠 Home</a></li>
+      <li><a href="/groups">🏟 Groups</a></li>
+      <li><a href="/simulator">🏆 Simulator</a></li>
+    </ul>
+
+    <!-- <button class="nav-menu-btn" onclick="toggleMobileMenu()">☰</button> -->
+
+  </nav>
+
+  <!-- <div class="mobile-menu" id="mobileMenu">
+    <a href="/">Home</a>
+    <a href="/groups">Groups</a>
+    <a href="/simulator">Simulator</a>
+  </div> -->
+
+  <main>
+
+    <!-- Teams header -->
+    <div class="card fade-up" style="margin-bottom:1.5rem;">
+      <div class="result-header">
+
+        <div class="team-side">
+          <img src="https://flagcdn.com/96x72/{{ r.home_code }}.png"
+            style="width:80px;height:60px;border-radius:6px;object-fit:cover;margin-bottom:0.5rem;"
+            alt="{{ r.home_team }}" />
+          <div class="team-name-big">{{ r.home_team }}</div>
+          <div class="team-rank">FIFA Rank #{{ r.home_ranking }}</div>
+          <div class="team-rank">{{ r.home_conf }}</div>
+        </div>
+
+        <div class="vs-big">VS</div>
+
+        <div class="team-side">
+          <img src="https://flagcdn.com/96x72/{{ r.away_code }}.png"
+            style="width:80px;height:60px;border-radius:6px;object-fit:cover;margin-bottom:0.5rem;"
+            alt="{{ r.away_team }}" />
+          <div class="team-name-big">{{ r.away_team }}</div>
+          <div class="team-rank">FIFA Rank #{{ r.away_ranking }}</div>
+          <div class="team-rank">{{ r.away_conf }}</div>
+        </div>
+
+      </div>
+
+      {% if is_neutral %}
+      <div style="text-align:center;font-size:13px;color:var(--text3);">
+        🌍 Neutral ground — home advantage removed
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Winner badge -->
+    <div class="winner-badge fade-up fade-up-1">
+      <div class="label">🏆 Predicted Winner</div>
+      <div class="winner-name">
+        {% if r.winner == "Draw" %}
+        🤝 Match ends in a Draw
+        {% else %}
+        <img src="https://flagcdn.com/48x36/{{ r.home_code if r.winner == r.home_team else r.away_code }}.png"
+          width="40" height="30" style="border-radius:4px;vertical-align:middle;margin-right:8px;"
+          alt="{{ r.winner }}" />
+        {{ r.winner }}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Probability bars -->
+    <div class="card fade-up fade-up-2" style="margin-bottom:1.5rem;">
+      <div class="card-title"> Match Probabilities</div>
+
+      <div class="prob-section">
+        <div class="prob-row">
+          <div class="prob-label">{{ r.home_team[:10] }}</div>
+          <div class="prob-bar-wrap">
+            <div class="prob-bar win" style="width:{{ r.home_win }}%">
+              {{ r.home_win }}%
+            </div>
+          </div>
+        </div>
+
+        <div class="prob-row">
+          <div class="prob-label">Draw</div>
+          <div class="prob-bar-wrap">
+            <div class="prob-bar draw" style="width:{{ r.draw }}%">
+              {{ r.draw }}%
+            </div>
+          </div>
+        </div>
+
+        <div class="prob-row">
+          <div class="prob-label">{{ r.away_team[:10] }}</div>
+          <div class="prob-bar-wrap">
+            <div class="prob-bar loss" style="width:{{ r.away_win }}%">
+              {{ r.away_win }}%
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats grid -->
+    <div class="stats-grid fade-up fade-up-3">
+      <div class="stat-box">
+        <span class="stat-value">{{ r.home_exp }}</span>
+        <span class="stat-label">{{ r.home_team[:12] }} Goals</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-value">{{ r.away_exp }}</span>
+        <span class="stat-label">{{ r.away_team[:12] }} Goals</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-value">{{ r.best_score }}</span>
+        <span class="stat-label">Most Likely Score</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-value">{{ r.best_score_prob }}%</span>
+        <span class="stat-label">Score Probability</span>
+      </div>
+    </div>
+
+    <!-- Team stats comparison -->
+    <div class="card fade-up fade-up-4" style="margin-top:1.5rem;">
+      <div class="card-title"> Team Strengths</div>
+      <div class="grid-2">
+
+        <div>
+          <div style="font-size:13px;color:var(--text2);
+            margin-bottom:1rem;font-weight:600;
+            display:flex;align-items:center;gap:8px;">
+            <img src="https://flagcdn.com/32x24/{{ r.home_code }}.png" width="28" height="21" style="border-radius:3px;"
+              alt="{{ r.home_team }}" />
+            {{ r.home_team }}
+          </div>
+          <div class="stat-box" style="margin-bottom:0.8rem;">
+            <span class="stat-value">{{ r.home_attack }}</span>
+            <span class="stat-label">Attack Strength</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-value">{{ r.home_defence }}</span>
+            <span class="stat-label">Defence Weakness</span>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:13px;color:var(--text2);
+            margin-bottom:1rem;font-weight:600;
+            display:flex;align-items:center;gap:8px;">
+            <img src="https://flagcdn.com/32x24/{{ r.away_code }}.png" width="28" height="21" style="border-radius:3px;"
+              alt="{{ r.away_team }}" />
+            {{ r.away_team }}
+          </div>
+          <div class="stat-box" style="margin-bottom:0.8rem;">
+            <span class="stat-value">{{ r.away_attack }}</span>
+            <span class="stat-label">Attack Strength</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-value">{{ r.away_defence }}</span>
+            <span class="stat-label">Defence Weakness</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Back button -->
+    <div style="text-align:center;margin-top:2rem;" class="fade-up">
+      <a href="/" class="btn btn-ghost">← Predict Another Match</a>
+    </div>
+
+  </main>
+
+  <footer>
+    <!-- Built with Poisson Regression + Elo Ratings &nbsp;·&nbsp; -->
+    FIFA World Cup 2026 &nbsp; &nbsp;
+    <!-- Data Science Project -->
+  </footer>
+
+
+  <!-- <script>
+    function toggleMobileMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+  </script> -->
+
+
+</body>
+
+</html>

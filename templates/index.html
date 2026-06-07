@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FIFA World Cup 2026 Predictor</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="/" class="nav-brand">
+      <img src="/static/fifa_logo.webp" style="height:40px;width:auto;object-fit:contain;" alt="FIFA World Cup 2026" />
+      <span style="color:white;font-size:24px;font-weight:700;letter-spacing:1px;line-height:40px;">FIFA WORLD CUP
+        2026</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/" class="active">🏠 Home</a></li>
+      <li><a href="/groups">🏟 Groups</a></li>
+      <li><a href="/simulator">🏆 Simulator</a></li>
+    </ul>
+    <!-- <button class="nav-menu-btn" onclick="toggleMobileMenu()">☰</button> -->
+
+  </nav>
+
+  <!-- <div class="mobile-menu" id="mobileMenu">
+    <a href="/">Home</a>
+    <a href="/groups">Groups</a>
+    <a href="/simulator">Simulator</a>
+  </div> -->
+
+  <!-- HERO — worldcup image full background -->
+  <!-- <section class="hero-section">
+    <div class="hero-overlay"></div>
+
+  </section>
+
+  <div class="hero-content">
+
+    <div class="hero-badge">
+      <span class="live-dot"></span>
+      June 11 — July 19, 2026
+    </div>
+
+    <div class="hero-hosts">
+      <img src="https://flagcdn.com/32x24/us.png" width="28" height="21" style="border-radius:3px;" alt="USA" />
+      <img src="https://flagcdn.com/32x24/ca.png" width="28" height="21" style="border-radius:3px;" alt="Canada" />
+      <img src="https://flagcdn.com/32x24/mx.png" width="28" height="21" style="border-radius:3px;" alt="Mexico" />
+      <span>USA · Canada · Mexico</span>
+    </div>
+
+    <h1 class="hero-title">2026 FIFA<br>WORLD CUP</h1>
+    <p class="hero-sub">Match predictions for all 104 World Cup matches</p>
+
+  </div> -->
+
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+  </section>
+
+  <section class="hero-content-section">
+    <div class="hero-content">
+
+      <div class="hero-badge">
+        <span class="live-dot"></span>
+        June 11 — July 19, 2026
+      </div>
+
+      <div class="hero-hosts">
+        <img src="https://flagcdn.com/32x24/us.png" width="28" height="21" alt="USA">
+        <img src="https://flagcdn.com/32x24/ca.png" width="28" height="21" alt="Canada">
+        <img src="https://flagcdn.com/32x24/mx.png" width="28" height="21" alt="Mexico">
+        <span>USA · Canada · Mexico</span>
+      </div>
+
+      <h1 class="hero-title">2026<br> FIFA WORLD CUP</h1>
+      <p class="hero-sub">MATCH PREDICTIONS FOR ALL 104 WORLD CUP MATCHES</p>
+
+    </div>
+  </section>
+
+  <!-- COUNTDOWN -->
+  <section class="countdown-section">
+    <div class="countdown-label">First Match Kicks Off In</div>
+    <div class="countdown-timer">
+      <div class="countdown-box">
+        <span class="countdown-num" id="cd-days">00</span>
+        <span class="countdown-unit">Days</span>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-box">
+        <span class="countdown-num" id="cd-hours">00</span>
+        <span class="countdown-unit">Hours</span>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-box">
+        <span class="countdown-num" id="cd-mins">00</span>
+        <span class="countdown-unit">Mins</span>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-box">
+        <span class="countdown-num" id="cd-secs">00</span>
+        <span class="countdown-unit">Secs</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREDICT SECTION -->
+  <section class="predict-section">
+    <div class="predict-container">
+
+      <div class="predict-title">Predict a Match</div>
+      <div class="predict-sub">Select any two teams from the 48 qualified nations</div>
+
+      {% if error %}
+      <div class="error-box">{{ error }}</div>
+      {% endif %}
+
+      <form method="POST" action="/predict" id="predictForm">
+
+        <div class="teams-row">
+
+          <!-- Team A -->
+          <div class="team-picker" id="pickerA">
+            <div class="picker-display" onclick="togglePicker('A')" id="displayA">
+              <div class="picker-flag-wrap" id="flagA">
+                <div class="flag-placeholder">?</div>
+              </div>
+              <div class="picker-info">
+                <span class="picker-label">Team A</span>
+                <span class="picker-name" id="nameA">Select Team</span>
+              </div>
+              <span class="picker-arrow">▼</span>
+            </div>
+            <input type="hidden" name="home_team" id="inputA" required />
+            <div class="picker-dropdown" id="dropdownA">
+              <input type="text" placeholder="Search team..." oninput="filterPicker('A', this.value)"
+                class="picker-search" id="searchA" />
+              <div class="picker-list" id="listA">
+                {% for team in teams %}
+                <div class="picker-option" data-name="{{ team }}" data-code="{{ flag_codes[team] }}"
+                  onclick="pickTeam('A','{{ team }}','{{ flag_codes[team] }}')">
+                  <img src="https://flagcdn.com/32x24/{{ flag_codes[team] }}.png" width="28" height="21"
+                    style="border-radius:2px;flex-shrink:0;" alt="{{ team }}" />
+                  <span>{{ team }}</span>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+
+          <!-- VS -->
+          <div class="vs-badge">VS</div>
+
+          <!-- Team B -->
+          <div class="team-picker" id="pickerB">
+            <div class="picker-display" onclick="togglePicker('B')" id="displayB">
+              <div class="picker-flag-wrap" id="flagB">
+                <div class="flag-placeholder">?</div>
+              </div>
+              <div class="picker-info">
+                <span class="picker-label">Team B</span>
+                <span class="picker-name" id="nameB">Select Team</span>
+              </div>
+              <span class="picker-arrow">▼</span>
+            </div>
+            <input type="hidden" name="away_team" id="inputB" required />
+            <div class="picker-dropdown" id="dropdownB">
+              <input type="text" placeholder="Search team..." oninput="filterPicker('B', this.value)"
+                class="picker-search" id="searchB" />
+              <div class="picker-list" id="listB">
+                {% for team in teams %}
+                <div class="picker-option" data-name="{{ team }}" data-code="{{ flag_codes[team] }}"
+                  onclick="pickTeam('B','{{ team }}','{{ flag_codes[team] }}')">
+                  <img src="https://flagcdn.com/32x24/{{ flag_codes[team] }}.png" width="28" height="21"
+                    style="border-radius:2px;flex-shrink:0;" alt="{{ team }}" />
+                  <span>{{ team }}</span>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="predictBtn" disabled style="opacity:0.5;">
+          Predict Match Outcome
+        </button>
+
+      </form>
+    </div>
+  </section>
+
+  <!-- 48 NATIONS FLAGS -->
+  <section class="flags-section">
+    <div class="flags-section-title">48 Qualified Nations</div>
+    <div class="all-flags-grid">
+      {% for team in teams %}
+      <div class="nation-flag-item" title="{{ team }}">
+        <img src="https://flagcdn.com/48x36/{{ flag_codes[team] }}.png" width="48" height="36"
+          style="border-radius:4px;object-fit:cover;" alt="{{ team }}" />
+        <span class="nation-name">{{ team }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <footer>
+    2026 FIFA World Cup Predictor &nbsp;·&nbsp;
+    USA · Canada · Mexico
+  </footer>
+
+  <style>
+    /* HERO */
+    .hero-section {
+      position: relative;
+      min-height: 100vh;
+      background: url('/static/worldcup_homepage.jpg') center center / cover no-repeat;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 0;
+    }
+
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom,
+          rgba(6, 11, 20, 0.3) 0%,
+          rgba(6, 11, 20, 0.5) 50%,
+          rgba(6, 11, 20, 0.95) 100%);
+    }
+
+
+    .hero-content {
+      background: #06111f;
+      min-height: 300px;
+      /* increase height */
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      /* vertical center */
+
+      align-items: center;
+      /* horizontal center */
+
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    /* .hero-content-section {
+      background: #06111f;
+      text-align: center;
+      padding: 40px 20px;
+    } */
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(245, 184, 0, 0.15);
+      border: 1px solid rgba(245, 184, 0, 0.4);
+      color: #F5B800;
+      padding: 6px 45px;
+      border-radius: 100px;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #F5B800;
+      animation: blink 1.5s infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.3;
+      }
+    }
+
+    .hero-hosts {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 15px;
+      color: #8B9AB5;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      letter-spacing: 6px;
+      line-height: 1;
+      color: #fff;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+      margin-bottom: 1rem;
+    }
+
+    .hero-sub {
+      font-size: 15px;
+      color: #EFBF04;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* COUNTDOWN */
+    .countdown-section {
+      background: #0D1520;
+      padding: 3rem 2rem;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .countdown-label {
+      font-size: 12px;
+      color: #8B9AB5;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 1.5rem;
+    }
+
+    .countdown-timer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .countdown-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #141E2E;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 16px 24px;
+      min-width: 90px;
+    }
+
+    .countdown-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: #F5B800;
+      line-height: 1;
+    }
+
+    .countdown-unit {
+      font-size: 11px;
+      color: #4A5568;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 6px;
+    }
+
+    .countdown-sep {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: #F5B800;
+      margin-bottom: 20px;
+    }
+
+    /* PREDICT */
+    .predict-section {
+      background: #060B14;
+      padding: 4rem 2rem;
+    }
+
+    .predict-container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: #0F1A28;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 2.5rem;
+    }
+
+    .predict-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 3px;
+      color: #F5B800;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .predict-sub {
+      text-align: center;
+      font-size: 14px;
+      color: #8B9AB5;
+      margin-bottom: 2rem;
+    }
+
+    .error-box {
+      background: rgba(255, 71, 87, 0.1);
+      border: 1px solid rgba(255, 71, 87, 0.3);
+      color: #FF4757;
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      font-size: 14px;
+    }
+
+    .teams-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 1rem;
+      align-items: start;
+      margin-bottom: 1.5rem;
+    }
+
+    .vs-badge {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 3px;
+      color: #4A5568;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    /* TEAM PICKER */
+    .team-picker {
+      position: relative;
+    }
+
+    .picker-display {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #141E2E;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      min-height: 70px;
+    }
+
+    .picker-display:hover {
+      border-color: #F5B800;
+    }
+
+    .picker-flag-wrap {
+      width: 48px;
+      height: 36px;
+      border-radius: 4px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .flag-placeholder {
+      font-size: 18px;
+      color: #4A5568;
+    }
+
+    .picker-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .picker-label {
+      display: block;
+      font-size: 11px;
+      color: #4A5568;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 3px;
+    }
+
+    .picker-name {
+      display: block;
+      font-size: 15px;
+      font-weight: 500;
+      color: #E8EDF5;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .picker-arrow {
+      color: #4A5568;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .picker-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: #0D1520;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      z-index: 100;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+    }
+
+    .picker-dropdown.open {
+      display: block;
+    }
+
+    .picker-search {
+      width: 100%;
+      background: #141E2E;
+      border: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      color: #E8EDF5;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .picker-search:focus {
+      outline: none;
+    }
+
+    .picker-list {
+      max-height: 260px;
+      overflow-y: auto;
+    }
+
+    .picker-list::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .picker-list::-webkit-scrollbar-track {
+      background: #0D1520;
+    }
+
+    .picker-list::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+    }
+
+    .picker-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #E8EDF5;
+      transition: background 0.15s;
+    }
+
+    .picker-option:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .picker-option.disabled {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    /* FLAGS SECTION */
+    .flags-section {
+      padding: 3rem 2rem;
+      background: #0D1520;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .flags-section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 3px;
+      color: #F5B800;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .all-flags-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .nation-flag-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: transform 0.2s;
+    }
+
+    .nation-flag-item:hover {
+      transform: scale(1.15);
+    }
+
+    .nation-name {
+      font-size: 9px;
+      color: #4A5568;
+      text-align: center;
+      max-width: 52px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* MOBILE NAV */
+    .nav-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: #E8EDF5;
+      font-size: 22px;
+      cursor: pointer;
+      padding: 4px 8px;
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: #0D1520;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 1rem;
+      gap: 4px;
+      position: sticky;
+      top: 64px;
+      z-index: 99;
+    }
+
+    .mobile-menu a {
+      color: #8B9AB5;
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    .mobile-menu a:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #E8EDF5;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      .nav-links {
+        display: none;
+      }
+
+      .nav-menu-btn {
+        display: block;
+      }
+
+      .teams-row {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+
+      .vs-badge {
+        margin: 0;
+      }
+
+      .countdown-box {
+        min-width: 64px;
+        padding: 12px 14px;
+      }
+
+      .countdown-num {
+        font-size: 2.2rem;
+      }
+
+      .countdown-sep {
+        font-size: 2rem;
+      }
+
+      .predict-container {
+        padding: 1.5rem 1rem;
+      }
+
+      .hero-title {
+        font-size: clamp(2.5rem, 12vw, 4rem);
+      }
+    }
+  </style>
+
+  <script>
+    // Countdown — June 12 2026 19:00 UTC
+    function updateCountdown() {
+      const target = new Date('2026-06-12T00:30:00+05:30');
+      const now = new Date();
+      const diff = target - now;
+      if (diff <= 0) {
+        ['days', 'hours', 'mins', 'secs'].forEach(u =>
+          document.getElementById('cd-' + u).textContent = '00');
+        return;
+      }
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      document.getElementById('cd-days').textContent = String(d).padStart(2, '0');
+      document.getElementById('cd-hours').textContent = String(h).padStart(2, '0');
+      document.getElementById('cd-mins').textContent = String(m).padStart(2, '0');
+      document.getElementById('cd-secs').textContent = String(s).padStart(2, '0');
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // Team picker
+    let selectedA = null, selectedB = null;
+
+    function togglePicker(side) {
+      const other = side === 'A' ? 'B' : 'A';
+      document.getElementById('dropdown' + other).classList.remove('open');
+      const dd = document.getElementById('dropdown' + side);
+      dd.classList.toggle('open');
+      if (dd.classList.contains('open')) {
+        const s = document.getElementById('search' + side);
+        s.value = '';
+        filterPicker(side, '');
+        s.focus();
+      }
+    }
+
+    function pickTeam(side, name, code) {
+      if (side === 'A') selectedA = name;
+      else selectedB = name;
+      document.getElementById('input' + side).value = name;
+      document.getElementById('name' + side).textContent = name;
+      document.getElementById('flag' + side).innerHTML =
+        `<img src="https://flagcdn.com/48x36/${code}.png"
+          width="48" height="36"
+          style="border-radius:4px;object-fit:cover;"
+          alt="${name}"/>`;
+      document.getElementById('dropdown' + side).classList.remove('open');
+      updateDisabled();
+      checkSubmit();
+    }
+
+    function updateDisabled() {
+      ['A', 'B'].forEach(side => {
+        const blocked = side === 'A' ? selectedB : selectedA;
+        document.querySelectorAll(`#list${side} .picker-option`).forEach(opt => {
+          opt.classList.toggle('disabled', blocked && opt.dataset.name === blocked);
+        });
+      });
+    }
+
+    function checkSubmit() {
+      const btn = document.getElementById('predictBtn');
+      const ok = selectedA && selectedB && selectedA !== selectedB;
+      btn.disabled = !ok;
+      btn.style.opacity = ok ? '1' : '0.5';
+    }
+
+    function filterPicker(side, q) {
+      document.querySelectorAll(`#list${side} .picker-option`).forEach(opt => {
+        opt.style.display =
+          opt.dataset.name.toLowerCase().includes(q.toLowerCase()) ? 'flex' : 'none';
+      });
+    }
+
+    document.addEventListener('click', e => {
+      ['A', 'B'].forEach(side => {
+        const p = document.getElementById('picker' + side);
+        if (p && !p.contains(e.target))
+          document.getElementById('dropdown' + side).classList.remove('open');
+      });
+    });
+
+    function toggleMobileMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+  </script>
+
+</body>
+
+</html>
