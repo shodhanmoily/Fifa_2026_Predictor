@@ -11,7 +11,7 @@
 </head>
 
 <body>
-
+  <!-- 
   <nav>
     <a href="/" class="nav-brand">
       <img src="/static/fifa_logo.webp" style="height:40px;width:auto;object-fit:contain;" alt="FIFA World Cup 2026" />
@@ -23,7 +23,30 @@
       <li><a href="/groups">🏟 Groups</a></li>
       <li><a href="/simulator" class="active">🏆 Simulator</a></li>
     </ul>
+  </nav> -->
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="/" class="nav-brand">
+      <img src="/static/fifa_logo.webp" style="height:40px;width:auto;object-fit:contain;" alt="FIFA World Cup 2026" />
+      <span style="color:white;font-size:24px;font-weight:700;letter-spacing:1px;line-height:40px;">FIFA WORLD CUP
+        2026</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">🏠 Home</a></li>
+      <li><a href="/groups">🏟 Groups</a></li>
+      <li><a href="/simulator" class="active">🏆 Simulator</a></li>
+    </ul>
+    <button class="nav-menu-btn" onclick="toggleMobileMenu()">☰</button>
+
   </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/">Home</a>
+    <a href="/groups">Groups</a>
+    <a href="/simulator">Simulator</a>
+  </div>
+
 
   <main>
 
@@ -138,6 +161,111 @@
   <footer>
     FIFA World Cup 2026 Predictor
   </footer>
+
+  <style>
+    /* NAVBAR */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1rem;
+      background: #020817;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 9999;
+      box-sizing: border-box;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-brand span {
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+    }
+
+    .nav-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    /* MOBILE MENU */
+    .mobile-menu {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      background: #020817;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: none;
+      flex-direction: column;
+      z-index: 9998;
+    }
+
+    .mobile-menu.show {
+      display: flex;
+    }
+
+    .mobile-menu a {
+      padding: 14px 20px;
+      color: white;
+      text-decoration: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* PAGE CONTENT BELOW FIXED NAVBAR */
+    body {
+      padding-top: 70px;
+    }
+
+    /* MOBILE */
+    @media (max-width:768px) {
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-brand span {
+        font-size: 14px;
+      }
+
+      .nav-menu-btn {
+        display: block;
+      }
+    }
+  </style>
+
+  <script>
+    function toggleMobileMenu() {
+      document.getElementById('mobileMenu').classList.toggle('show');
+    }
+  </script>
+
 
 </body>
 

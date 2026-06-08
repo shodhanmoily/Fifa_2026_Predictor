@@ -45,6 +45,212 @@
       margin-top: 4px;
     }
 
+    /* NAVBAR */
+    nav {
+      position: relative;
+      width: 100%;
+      height: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1rem;
+      background: #020817;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-sizing: border-box;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-brand span {
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+    }
+
+    .nav-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    /* MOBILE MENU */
+    .mobile-menu {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      background: #020817;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: none;
+      flex-direction: column;
+      z-index: 9998;
+    }
+
+    .mobile-menu.show {
+      display: flex;
+    }
+
+    .mobile-menu a {
+      padding: 14px 20px;
+      color: white;
+      text-decoration: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* PAGE CONTENT BELOW FIXED NAVBAR */
+    /* body {
+      padding-top: 70px;
+    } */
+
+    /* MOBILE */
+    @media (max-width:768px) {
+
+      /* NAVBAR */
+      body {
+        padding-top: 70px;
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9999;
+      }
+
+      body {
+        padding-top: 70px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-brand span {
+        font-size: 14px;
+      }
+
+      .nav-menu-btn {
+        display: block;
+      }
+
+      .mobile-menu {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        z-index: 9998;
+      }
+
+      /* BRACKET */
+
+      .ko-page {
+        padding: 1rem 0 2rem;
+        overflow: hidden;
+      }
+
+      .ko-header {
+        padding: 2rem 1rem 1.5rem;
+      }
+
+      .ko-title {
+        font-size: 2.2rem;
+        letter-spacing: 6px;
+        line-height: 1.4;
+      }
+
+      .bracket-outer {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0 1rem 1rem;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .bracket-columns {
+        width: max-content;
+        min-width: 1300px;
+      }
+
+      .b-col.c-r32,
+      .b-col.c-r16,
+      .b-col.c-qf,
+      .b-col.c-sf,
+      .b-col.c-sf2,
+      .b-col.c-qf2,
+      .b-col.c-r162,
+      .b-col.c-r322 {
+        width: 145px;
+      }
+
+      .b-col.c-ctr {
+        min-width: 170px;
+      }
+
+      .team-chip {
+        width: 128px;
+        font-size: 11px;
+        padding: 6px 7px;
+      }
+
+      .team-chip img {
+        width: 20px;
+        height: 15px;
+      }
+
+      .col-label {
+        font-size: 11px;
+        letter-spacing: 2px;
+      }
+
+      .center-label {
+        font-size: 18px;
+      }
+
+      .trophy-img {
+        width: 95px;
+        height: 125px;
+      }
+
+      .final-chips {
+        width: 140px;
+      }
+
+      .champ-box h3 {
+        font-size: 1.5rem;
+      }
+
+      .ko-nav {
+        padding: 0 1rem;
+      }
+
+      .ko-nav a {
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+      }
+    }
+
     /* ═══════════════════════════════════════
        BRACKET LAYOUT
        We use a fixed-size SVG overlay for lines
@@ -346,7 +552,7 @@
 </head>
 
 <body>
-
+  <!-- NAVBAR -->
   <nav>
     <a href="/" class="nav-brand">
       <img src="/static/fifa_logo.webp" style="height:40px;width:auto;object-fit:contain;" alt="FIFA World Cup 2026" />
@@ -354,11 +560,20 @@
         2026</span>
     </a>
     <ul class="nav-links">
-      <li><a href="/">🏠 Home</a></li>
+      <li><a href="/" class="active">🏠 Home</a></li>
       <li><a href="/groups">🏟 Groups</a></li>
       <li><a href="/simulator">🏆 Simulator</a></li>
     </ul>
+    <button class="nav-menu-btn" onclick="toggleMobileMenu()">☰</button>
+
   </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/">Home</a>
+    <a href="/groups">Groups</a>
+    <a href="/simulator">Simulator</a>
+  </div>
+
 
   <div class="ko-page">
 
@@ -416,7 +631,7 @@
 
         <!-- QF LEFT -->
         <div class="b-col c-qf">
-          <div class="col-label"  style="margin-top: 35px;">Quarter Finals</div>
+          <div class="col-label" style="margin-top: 35px;">Quarter Finals</div>
           {% for match in qf_matches[:2] %}
           <div class="match-slot" data-col="qfl" data-idx="{{ loop.index0 }}">
             <div class="match-box">
@@ -520,7 +735,7 @@
 
         <!-- R16 RIGHT -->
         <div class="b-col c-r162">
-          <div class="col-label"  style="margin-top: 20px;">Round of 16</div>
+          <div class="col-label" style="margin-top: 20px;">Round of 16</div>
           {% for match in r16_matches[4:8] %}
           <div class="match-slot" data-col="r16r" data-idx="{{ loop.index0 }}">
             <div class="match-box">
@@ -729,6 +944,12 @@
     });
 
     window.addEventListener('resize', drawLines);
+
+
+    function toggleMobileMenu() {
+      document.getElementById('mobileMenu').classList.toggle('show');
+    }
+
   </script>
 
 </body>
