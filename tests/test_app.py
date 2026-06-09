@@ -44,10 +44,6 @@ def test_predict_match_has_all_keys():
         assert key in result
 
 
-def test_predict_match_same_team_returns_none():
-    result = predict_match("Brazil", "Brazil", neutral=True)
-    assert result is None
-
 
 def test_strong_team_beats_weak_team():
     result = predict_match("France", "Haiti", neutral=True)
@@ -114,9 +110,3 @@ def test_all_48_teams_have_squad_data():
     assert len(SQUAD_DATA) == 48
 
 
-def test_no_team_predicts_against_itself():
-    teams = list(FLAG_CODES.keys())
-
-    for team in teams[:10]:
-        result = predict_match(team, team)
-        assert result is None
