@@ -3,6 +3,13 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+echo venv/ > .gitignore
+echo __pycache__/ >> .gitignore
+echo *.pyc >> .gitignore
+echo .env >> .gitignore
+echo *.ipynb >> .gitignore
+echo Fifa_2026_Predictor/ >> .gitignore
+
 # C extensions
 *.so
 
