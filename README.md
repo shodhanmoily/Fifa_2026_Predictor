@@ -1,11 +1,5 @@
 # 🏆 FIFA World Cup 2026 Match Predictor
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-FIFA%202026%20Predictor-gold?style=for-the-badge&logo=football)](https://fifa-2026-predictor-production.up.railway.app/)
-[![Python](https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python)](https://python.org)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.110-green?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com)
-[![Docker](https://img.shields.io/badge/Docker-Deployed-blue?style=for-the-badge&logo=docker)](https://docker.com)
-[![Railway](https://img.shields.io/badge/Railway-Live-purple?style=for-the-badge&logo=railway)](https://railway.app)
-
 > **Live Predictions for all 104 FIFA World Cup 2026 matches using Poisson Regression and Elo Ratings**
 
 
