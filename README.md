@@ -8,7 +8,7 @@
 
 > **Live Predictions for all 104 FIFA World Cup 2026 matches using Poisson Regression and Elo Ratings**
 
-🔗 **Live App:** — [Click Here](https://fifa-2026-predictor-production.up.railway.app/)
+
 
 ---
 
